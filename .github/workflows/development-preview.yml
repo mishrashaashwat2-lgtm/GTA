@@ -1,0 +1,70 @@
+name: GTA Hub Development Preview
+
+on:
+  push:
+    branches:
+      - gta-hub-upgrade
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preview-check:
+    name: Render desktop and mobile previews
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out development branch
+        uses: actions/checkout@v4
+        with:
+          ref: gta-hub-upgrade
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install browser test tools
+        run: |
+          npm init -y
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+
+      - name: Render desktop and mobile screenshots
+        run: |
+          mkdir -p preview-output
+          cat > preview-output/render.cjs <<'SCRIPT'
+          const { chromium } = require('playwright');
+          const path = require('path');
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
+            const errors = [];
+            page.on('pageerror', error => errors.push(error.message));
+            await page.goto('file://' + path.resolve('index.html'), { waitUntil: 'networkidle', timeout: 60000 });
+            await page.screenshot({ path: 'preview-output/desktop.png', fullPage: true });
+            await page.setViewportSize({ width: 390, height: 844 });
+            await page.screenshot({ path: 'preview-output/mobile.png', fullPage: true });
+            const title = await page.title();
+            const heading = await page.locator('h1').first().innerText().catch(() => '(no h1 found)');
+            const horizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+            require('fs').writeFileSync('preview-output/report.txt', [
+              'Page title: ' + title,
+              'First H1: ' + heading,
+              'Mobile horizontal overflow: ' + horizontalOverflow,
+              'Browser page errors: ' + (errors.length ? errors.join(' | ') : 'none')
+            ].join('\n'));
+            await browser.close();
+            if (errors.length) process.exitCode = 1;
+          })().catch(error => { console.error(error); process.exit(1); });
+          SCRIPT
+          node preview-output/render.cjs
+
+      - name: Upload preview screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gta-hub-development-preview
+          path: preview-output/
+          if-no-files-found: warn
+          retention-days: 7
