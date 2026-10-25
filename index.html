@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GTA 6 Cheat Codes Hub</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Outfit:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: neon-sunset hero, then a sticky search/filter bar over a list of code cards. Single dark look by choice. */
+:root {
+  --bg: #12061f;
+  --surface: #1c0b30;
+  --surface-2: #281042;
+  --line: #3d1a63;
+  --fg: #fbeaff;
+  --muted: #b79ad1;
+  --pink: #ff2d95;
+  --orange: #ff8a3d;
+  --cyan: #2de2e6;
+  --good: #5cf2a0;
+  --bad: #ff6b81;
+  --f-display: "Bungee", "Impact", sans-serif;
+  --f-body: "Outfit", system-ui, sans-serif;
+  --f-code: "IBM Plex Mono", ui-monospace, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 16px; line-height: 1.5;
+  padding-block: 0 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+.wrap { max-width: 760px; margin: 0 auto; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+/* Hero */
+.hero { position: relative; overflow: hidden; margin: 12px calc(-1 * max(16px, env(safe-area-inset-left, 0px))) 0; padding: 36px max(16px, env(safe-area-inset-left, 0px)) 0; text-align: center;
+  background: linear-gradient(180deg, #1a0733 0%, #4a0f5c 55%, #a8165f 100%); border-bottom: 2px solid var(--pink); }
+.sun { position: relative; width: min(58vw, 230px); aspect-ratio: 1; margin: 0 auto -62px; border-radius: 50%;
+  background: linear-gradient(180deg, #ffe45e 0%, var(--orange) 45%, var(--pink) 100%); box-shadow: 0 0 80px 10px rgba(255,45,149,.45); }
+.sun::after { content: ""; position: absolute; inset: 50% 0 0; border-radius: 0 0 999px 999px;
+  background: repeating-linear-gradient(180deg, transparent 0 7px, #7a1260 7px 11px); }
+.eyebrow { font-family: var(--f-code); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); }
+h1 { font-family: var(--f-display); font-weight: 400; font-size: clamp(34px, 11vw, 62px); line-height: 1; margin: 10px 0 8px; text-wrap: balance;
+  background: linear-gradient(180deg, #fff 10%, #ffb3dc 55%, var(--pink) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 18px rgba(255,45,149,.55)); }
+.hero p { margin: 0 auto; max-width: 34ch; color: #f3d3ff; }
+.floor { height: 90px; margin-top: 22px; background:
+  linear-gradient(180deg, rgba(18,6,31,0) 0%, rgba(18,6,31,.9) 100%),
+  repeating-linear-gradient(90deg, rgba(45,226,230,.55) 0 1px, transparent 1px 44px),
+  repeating-linear-gradient(0deg, rgba(45,226,230,.45) 0 1px, transparent 1px 18px); transform: perspective(160px) rotateX(38deg); transform-origin: bottom; }
+
+/* Sticky controls */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); padding: 14px 0 10px; display: grid; gap: 10px; border-bottom: 1px solid var(--line); }
+.search { width: 100%; height: 46px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); padding: 0 14px; }
+.search::placeholder { color: var(--muted); }
+.row { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+.row::-webkit-scrollbar { display: none; }
+.chip { flex: none; height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer; font-weight: 500; }
+.chip[aria-pressed="true"] { background: var(--pink); border-color: var(--pink); color: #fff; }
+.chip.cy[aria-pressed="true"] { background: var(--cyan); border-color: var(--cyan); color: #12061f; }
+.label { font-family: var(--f-code); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+/* Status notice */
+.notice { margin-top: 18px; border: 1px solid var(--cyan); border-radius: 14px; padding: 16px; background: linear-gradient(135deg, rgba(45,226,230,.1), rgba(255,45,149,.08)); }
+.notice h2 { font-family: var(--f-display); font-weight: 400; font-size: 18px; margin: 0 0 6px; color: var(--cyan); }
+.notice p { margin: 0 0 10px; color: #e8cdf7; }
+.notice form { display: grid; gap: 8px; margin-top: 10px; }
+.notice input, .notice textarea { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%; }
+.btn { height: 42px; border: 0; border-radius: 10px; padding: 0 16px; background: linear-gradient(90deg, var(--pink), var(--orange)); color: #fff; font-weight: 600; cursor: pointer; }
+
+/* Code cards */
+.list { display: grid; gap: 14px; margin-top: 18px; padding: 0; list-style: none; }
+.card { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); padding: 16px; min-width: 0; }
+.card.mine { border-color: var(--orange); }
+.top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.card h3 { margin: 0; font-size: 18px; font-weight: 600; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.tag { font-family: var(--f-code); font-size: 11px; letter-spacing: .06em; padding: 2px 8px; border-radius: 6px; background: var(--surface-2); color: var(--muted); }
+.tag.v { color: var(--good); } .tag.u { color: var(--orange); }
+.fav { flex: none; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: transparent; color: var(--muted); font-size: 20px; cursor: pointer; }
+.fav[aria-pressed="true"] { color: var(--pink); border-color: var(--pink); }
+.desc { margin: 10px 0 12px; color: #dcc2ee; }
+.code { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; background: #0d0418; border: 1px dashed var(--line); border-radius: 12px; padding: 12px; font-family: var(--f-code); }
+.word { font-size: 20px; letter-spacing: .12em; color: var(--cyan); font-weight: 600; overflow-wrap: anywhere; }
+.k { min-width: 34px; height: 34px; padding: 0 8px; display: inline-grid; place-items: center; border-radius: 9px; background: var(--surface-2); border: 1px solid var(--line); font-size: 13px; font-weight: 600; }
+.k.a { color: #6ee26e; } .k.b { color: #ff6b6b; } .k.x { color: #6ea8ff; } .k.y { color: #ffd84a; }
+.k.ps-x { color: #7aa7ff; } .k.ps-o { color: #ff6b6b; } .k.ps-s { color: #ff8fd6; } .k.ps-t { color: #5cf2c8; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+.act { height: 38px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface-2); cursor: pointer; font-weight: 500; }
+.act.copy { background: var(--cyan); border-color: var(--cyan); color: #12061f; }
+.act[aria-pressed="true"].up { border-color: var(--good); color: var(--good); }
+.act[aria-pressed="true"].down { border-color: var(--bad); color: var(--bad); }
+.warn { margin: 22px 0 0; font-size: 13px; color: var(--muted); }
+.empty { text-align: center; padding: 36px 12px; color: var(--muted); border: 1px dashed var(--line); border-radius: 14px; margin-top: 18px; }
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); background: var(--fg); color: #12061f; padding: 10px 16px; border-radius: 999px; font-weight: 600; opacity: 0; pointer-events: none; transition: .2s; z-index: 40; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="eyebrow">Cheat codes hub</div>
+    <h1>GTA 6<br>Cheat Codes</h1>
+    <p>Search, copy and track codes for PlayStation, Xbox and PC.</p>
+    <div class="floor" aria-hidden="true"></div>
+  </header>
+
+  <div class="bar">
+    <input id="q" class="search" type="search" placeholder="Search cheats, e.g. invincibility" aria-label="Search cheats" autocomplete="off">
+    <div class="row" id="platform" role="group" aria-label="Platform"></div>
+    <div class="row" id="filters" role="group" aria-label="Filters"></div>
+  </div>
+
+  <section class="notice" id="notice" aria-live="polite"></section>
+  <ul class="list" id="list"></ul>
+  <p class="warn">Cheats can disable trophies or achievements in the classic games. Fan-made hub, not affiliated with or endorsed by Rockstar Games or Take-Two.</p>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const CODES = [
+  { id: "inv", cat: "Player", name: "Invincibility", desc: "Take no damage for about five minutes.", pc: "PAINKILLER", pad: ["Right","X","Right","Left","Right","R1","Right","Left","X","Triangle"] },
+  { id: "hp", cat: "Player", name: "Max health and armor", desc: "Refills health and armor instantly.", pc: "TURTLE", pad: ["Circle","L1","Triangle","R2","X","Square","Circle","Right","Circle","L1","L1","L1"] },
+  { id: "wup", cat: "Wanted", name: "Raise wanted level", desc: "Adds one star each time you enter it.", pc: "FUGITIVE", pad: ["R1","R1","Circle","R2","Right","Left","Right","Left","Right","Left"] },
+  { id: "wdn", cat: "Wanted", name: "Lower wanted level", desc: "Removes one star each time you enter it.", pc: "LAWYERUP", pad: ["R1","R1","Circle","R2","Left","Right","Left","Right","Left","Right"] },
+  { id: "slo", cat: "Weapons", name: "Slow-motion aim", desc: "Slows time while you aim. Enter again to turn it off.", pc: "DEADEYE", pad: ["Square","L2","R1","Triangle","Left","Square","L2","Right","X"] },
+  { id: "sky", cat: "Fun", name: "Skyfall", desc: "Drops you from the sky. Parachute included.", pc: "SKYDIVE", pad: ["L1","L2","R1","R2","Up","Down","Up","Down","Up","Down"] },
+  { id: "buz", cat: "Vehicles", name: "Spawn attack helicopter", desc: "Spawns a Buzzard next to you.", pc: "BUZZOFF", pad: ["Circle","Circle","L1","Circle","Circle","Circle","L1","L2","R1","Triangle","Circle","Triangle"] }
+];
+const CATS = ["All","Player","Wanted","Weapons","Vehicles","Fun","Favorites"];
+const PLATFORMS = ["PlayStation","Xbox","PC"];
+const XBOX = { X:"A", Circle:"B", Square:"X", Triangle:"Y", L1:"LB", R1:"RB", L2:"LT", R2:"RT" };
+const ARROW = { Up:"↑", Down:"↓", Left:"←", Right:"→" };
+const PS_GLYPH = { X:["✕","ps-x"], Circle:["○","ps-o"], Square:["□","ps-s"], Triangle:["△","ps-t"] };
+
+const store = {
+  get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+const state = {
+  platform: store.get("hub:platform", "PlayStation"), cat: "All", game: "All",
+  favs: store.get("hub:favs", []), votes: store.get("hub:votes", {}), mine: store.get("hub:mine", []), q: ""
+};
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+
+function glyph(btn, platform) {
+  if (ARROW[btn]) return `<span class="k">${ARROW[btn]}</span>`;
+  if (platform === "Xbox") {
+    const l = XBOX[btn]; const cls = { A:"a", B:"b", X:"x", Y:"y" }[l] || "";
+    return `<span class="k ${cls}">${l}</span>`;
+  }
+  const g = PS_GLYPH[btn];
+  return g ? `<span class="k ${g[1]}">${g[0]}</span>` : `<span class="k">${btn}</span>`;
+}
+function plain(c) {
+  if (state.platform === "PC") return c.pc;
+  return c.pad.map(b => ARROW[b] || (state.platform === "Xbox" ? XBOX[b] || b : b)).join(" ");
+}
+
+function renderControls() {
+  $("platform").innerHTML = PLATFORMS.map(p => `<button class="chip cy" aria-pressed="${p === state.platform}" data-p="${p}">${p}</button>`).join("");
+  const games = ["All","GTA 6","GTA V (classic)"];
+  $("filters").innerHTML = games.map(g => `<button class="chip cy" aria-pressed="${g === state.game}" data-g="${g}">${g}</button>`).join("") +
+    CATS.map(c => `<button class="chip" aria-pressed="${c === state.cat}" data-c="${c}">${c}${c === "Favorites" ? " (" + state.favs.length + ")" : ""}</button>`).join("");
+}
+
+function renderNotice() {
+  const mineCount = state.mine.length;
+  $("notice").innerHTML = `
+    <h2>GTA 6 codes: none verified yet</h2>
+    <p>No official GTA 6 cheat list is confirmed, and lists online are unverified. A code appears here as Verified only after it is tested in the game. Classic GTA V codes below are for reference.</p>
+    <details ${mineCount ? "open" : ""}><summary class="label" style="cursor:pointer">Submit a code you found</summary>
+      <form id="sub">
+        <input id="sn" placeholder="Cheat name" maxlength="60" required aria-label="Cheat name">
+        <input id="sc" placeholder="Code or button sequence" maxlength="120" required aria-label="Code or button sequence">
+        <button class="btn" type="submit">Save to my list</button>
+        <span class="label">Saved on this device only, marked Unverified.</span>
+      </form></details>`;
+  $("sub").addEventListener("submit", e => {
+    e.preventDefault();
+    const name = $("sn").value.trim(), code = $("sc").value.trim();
+    if (!name || !code) return;
+    state.mine.unshift({ id: "u" + Date.now(), name, code });
+    store.set("hub:mine", state.mine);
+    toast("Saved as Unverified");
+    render();
+  });
+}
+
+function matches(c) {
+  if (state.cat === "Favorites") return state.favs.includes(c.id);
+  if (state.cat !== "All" && c.cat !== state.cat) return false;
+  const q = state.q.toLowerCase();
+  return !q || (c.name + " " + c.desc + " " + c.pc).toLowerCase().includes(q);
+}
+
+function renderList() {
+  const showClassic = state.game !== "GTA 6";
+  const items = showClassic ? CODES.filter(matches) : [];
+  const mine = state.game === "GTA V (classic)" ? [] : state.mine.filter(m => !state.q || m.name.toLowerCase().includes(state.q.toLowerCase()));
+  let html = mine.map(m => `
+    <li class="card mine"><div class="top"><div><h3>${esc(m.name)}</h3>
+      <div class="meta"><span class="tag u">UNVERIFIED</span><span class="tag">GTA 6 · your submission</span></div></div></div>
+      <div class="code"><span class="word">${esc(m.code)}</span></div>
+      <div class="actions"><button class="act copy" data-copy="${esc(m.code)}">Copy</button><button class="act" data-rm="${m.id}">Remove</button></div></li>`).join("");
+  html += items.map(c => {
+    const v = state.votes[c.id], fav = state.favs.includes(c.id);
+    const body = state.platform === "PC" ? `<span class="word">${c.pc}</span>` : c.pad.map(b => glyph(b, state.platform)).join("");
+    return `<li class="card"><div class="top"><div><h3>${c.name}</h3>
+      <div class="meta"><span class="tag v">VERIFIED · GTA V</span><span class="tag">${c.cat}</span></div></div>
+      <button class="fav" aria-pressed="${fav}" aria-label="Favorite ${c.name}" data-fav="${c.id}">${fav ? "♥" : "♡"}</button></div>
+      <p class="desc">${c.desc}</p><div class="code">${body}</div>
+      <div class="actions"><button class="act copy" data-copy="${esc(plain(c))}">Copy</button>
+      <button class="act up" aria-pressed="${v === 1}" data-vote="${c.id}:1">Worked</button>
+      <button class="act down" aria-pressed="${v === -1}" data-vote="${c.id}:-1">Didn't work</button></div></li>`;
+  }).join("");
+  $("list").innerHTML = html || `<li class="empty">${state.game === "GTA 6" ? "No verified GTA 6 codes yet. Submit one above and it will show here as Unverified." : "No cheats match your search."}</li>`;
+}
+function render() { renderControls(); renderNotice(); renderList(); }
+
+let t;
+function toast(msg) { const el = $("toast"); el.textContent = msg; el.classList.add("show"); clearTimeout(t); t = setTimeout(() => el.classList.remove("show"), 1600); }
+function fallbackCopy(text) {
+  const ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+  document.body.appendChild(ta); ta.select(); let ok = false;
+  try { ok = document.execCommand("copy"); } catch {}
+  ta.remove(); return ok;
+}
+function copy(text) {
+  const done = ok => toast(ok ? "Copied" : "Press and hold to copy: " + text);
+  if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => done(true), () => done(fallbackCopy(text)));
+  else done(fallbackCopy(text));
+}
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.dataset.p) { state.platform = b.dataset.p; store.set("hub:platform", state.platform); render(); }
+  else if (b.dataset.g) { state.game = b.dataset.g; render(); }
+  else if (b.dataset.c) { state.cat = b.dataset.c; render(); }
+  else if (b.dataset.copy !== undefined) copy(b.dataset.copy);
+  else if (b.dataset.fav) { const id = b.dataset.fav; state.favs = state.favs.includes(id) ? state.favs.filter(x => x !== id) : [...state.favs, id]; store.set("hub:favs", state.favs); render(); }
+  else if (b.dataset.vote) { const [id, n] = b.dataset.vote.split(":"); state.votes[id] = state.votes[id] === +n ? 0 : +n; store.set("hub:votes", state.votes); renderList(); }
+  else if (b.dataset.rm) { state.mine = state.mine.filter(m => m.id !== b.dataset.rm); store.set("hub:mine", state.mine); render(); }
+});
+$("q").addEventListener("input", e => { state.q = e.target.value; renderList(); });
+render();
+</script>
+
+</body>
+</html>
